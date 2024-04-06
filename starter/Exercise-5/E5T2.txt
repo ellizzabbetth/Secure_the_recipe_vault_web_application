@@ -1,0 +1,30 @@
+# Identify tools that will allow you to do the following:
+
+## Scan infrastructure as code templates
+
+Checkov is a static code analysis tool for infrastructure-as-codewhich scans cloud infrastructure
+provisioned using Terraform, Cloudformation or Kubernetes and detects security and compliance misconfigurations.
+
+
+### Example vulnerability
+
+- Ensure no security groups allow ingress from 0.0.0.0:0 to port 22
+- Ensure no security groups allow ingress from 0.0.0.0:0 to port 3389
+
+
+## Scan AMI’s or containers for OS vulnerabilities
+
+microscanner: https://github.com/aquasecurity/microscanner
+
+### Example vulnerability
+
+NIST: https://nvd.nist.gov/
+
+## Scan an AWS environment for cloud configuration vulnerabilities
+
+AWStealth: https://github.com/cyberark/SkyArk/tree/master/AWStealth
+
+### Example vulnerability
+
+Unsecure privileged users who don't have strong, rotated and safely stored credentials, do not have
+MFA enabled, etc. 

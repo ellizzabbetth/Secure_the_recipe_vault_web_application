@@ -1,0 +1,226 @@
+# Describe GuardDuty findings that were detected related to the brute force attack
+
+Unfortunately AWS GuardDuty could not detect the brute force attack during a single day. Below I've listed the commands used to issue the attack.
+
+
+# Research the AWS Guard Duty documentation page and explain how GuardDuty may have detected this attack - i.e. what was its source of information.
+
+According the the GuardDuty documentation, GuardDuty analyses and processes data from AWS CloudTrail event logs, VPC Flow Logs, and DNS logs.
+A brute force attack would be picked up in the VPC Flow Logs.
+
+
+
+NOTES:
+
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+                                                                                                                             Install the latest PowerShell for new features and improvements! https://aka.ms/PSWindows                                                                                                                                                                 PS C:\Users\zzbra> Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0                                             Add-WindowsCapability : The requested operation requires elevation.                                                          At line:1 char:1
++ Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Add-WindowsCapability], COMException
+    + FullyQualifiedErrorId : Microsoft.Dism.Commands.AddWindowsCapabilityCommand
+
+PS C:\Users\zzbra> cd ~
+PS C:\Users\zzbra> cd ../../
+PS C:\> Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
+Add-WindowsCapability : The requested operation requires elevation.
+At line:1 char:1
++ Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (:) [Add-WindowsCapability], COMException
+    + FullyQualifiedErrorId : Microsoft.Dism.Commands.AddWindowsCapabilityCommand
+
+PS C:\> cd .\udacity_aws_cloud_architect\
+PS C:\udacity_aws_cloud_architect> ls
+
+
+    Directory: C:\udacity_aws_cloud_architect
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----          4/3/2024   1:45 PM                cd0345-design-for-performance-and-scalability
+d-----          4/3/2024   1:41 PM                cd0345-design-for-performance-and-scalability-ZIP
+d-----          4/4/2024   2:38 AM                nd063-c2-design-for-availability-resilience-reliability-replacement-projec
+                                                  t-starter-template
+d-----          4/4/2024  11:44 AM                nd063-c3-design-for-security-project-starter
+-a----          4/2/2024   5:17 PM           1338 .gitignore
+-a----          4/3/2024   8:40 PM      127509931 cd0345-design-for-performance-and-scalability (3).zip
+-a----          4/3/2024   9:13 PM      127545685 cd0345-design-for-performance-and-scalability (4).zip
+-a----          4/3/2024   1:53 PM      127321464 cd0345-design-for-performance-and-scalability-forgithub.zip
+-a----          4/3/2024   2:20 PM      127474477 cd0345-design-for-performance-and-scalability-smaller (2).zip
+-a----          4/3/2024   2:13 PM      127318884 cd0345-design-for-performance-and-scalability-smaller.zip
+-a----          4/3/2024  12:55 PM      345691156 cd0345-design-for-performance-and-scalability.zip
+-a----         3/28/2024  10:04 AM       21177116 nd063-c2-design-for-availability-resilience-reliability-replacement-projec
+                                                  t-starter-template.zip
+
+
+PS C:\udacity_aws_cloud_architect> cd .\nd063-c3-design-for-security-project-starter\
+PS C:\udacity_aws_cloud_architect\nd063-c3-design-for-security-project-starter> ls
+
+
+    Directory: C:\udacity_aws_cloud_architect\nd063-c3-design-for-security-project-starter
+
+
+Mode                 LastWriteTime         Length Name
+----                 -------------         ------ ----
+d-----          4/4/2024   2:45 AM                .github
+d-----          4/4/2024  11:53 AM                Exercise-2
+d-----          4/4/2024   9:33 AM                screenshots
+d-----          4/4/2024   9:06 AM                starter
+-a----          4/4/2024   2:45 AM           3078 .gitignore
+-a----          4/4/2024   2:45 AM             42 CODEOWNERS
+-a----          4/4/2024   2:45 AM          24244 README.md
+
+
+PS C:\udacity_aws_cloud_architect\nd063-c3-design-for-security-project-starter> cd starter
+PS C:\udacity_aws_cloud_architect\nd063-c3-design-for-security-project-starter\starter> ssh -i ./recipe.pem ubuntu@ec2-34-225-89-253.compute-1.amazonaws.com
+The authenticity of host 'ec2-34-225-89-253.compute-1.amazonaws.com (34.225.89.253)' can't be established.
+ED25519 key fingerprint is SHA256:diaZztRFa5xX6x43ravI49d4m5OcHu4qWCbSlwFvFf8.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'ec2-34-225-89-253.compute-1.amazonaws.com' (ED25519) to the list of known hosts.
+Bad permissions. Try removing permissions for user: NT AUTHORITY\\Authenticated Users (S-1-5-11) on file C:/udacity_aws_cloud_architect/nd063-c3-design-for-security-project-starter/starter/recipe.pem.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions for './recipe.pem' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "./recipe.pem": bad permissions
+ubuntu@ec2-34-225-89-253.compute-1.amazonaws.com's password:
+PS C:\udacity_aws_cloud_architect\nd063-c3-design-for-security-project-starter\starter> chmod 400 "recipe.pem"
+PS C:\udacity_aws_cloud_architect\nd063-c3-design-for-security-project-starter\starter> ssh -i "recipe.pem" ubuntu@ec2-34-225-89-253.compute-1.amazonaws.com
+Bad permissions. Try removing permissions for user: NT AUTHORITY\\Authenticated Users (S-1-5-11) on file C:/udacity_aws_cloud_architect/nd063-c3-design-for-security-project-starter/starter/recipe.pem.
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions for 'recipe.pem' are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key "recipe.pem": bad permissions
+ubuntu@ec2-34-225-89-253.compute-1.amazonaws.com's password:
+Connection closed by 34.225.89.253 port 22
+PS C:\udacity_aws_cloud_architect\nd063-c3-design-for-security-project-starter\starter> ssh -i "recipe.pem" ubuntu@ec2-34-225-89-253.compute-1.amazonaws.com
+Welcome to Ubuntu 18.04.3 LTS (GNU/Linux 5.4.0-1103-aws x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Thu Apr  4 17:15:07 UTC 2024
+
+  System load:  0.0               Processes:           98
+  Usage of /:   32.0% of 7.68GB   Users logged in:     0
+  Memory usage: 19%               IP address for ens5: 10.192.10.167
+  Swap usage:   0%
+
+ * Strictly confined Kubernetes makes edge and IoT secure. Learn how MicroK8s
+   just raised the bar for easy, resilient and secure K8s cluster deployment.
+
+   https://ubuntu.com/engage/secure-kubernetes-at-the-edge
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+100 packages can be updated.
+1 update is a security update.
+
+
+Last login: Tue Feb  4 20:13:50 2020 from 73.22.214.244
+ubuntu@ip-10-192-10-167:~$ date
+untu -P rockyou.txt ssh://<YourApplicationServerDThu Apr  4 17:17:55 UTC 2024
+ubuntu@ip-10-192-10-167:~$ hydra -l ubuntu -P rockyou.txt ssh://ec2-34-225-89-253.compute-1.amazonaws.com
+
+Command 'hydra' not found, but can be installed with:
+
+sudo apt install hydra
+
+ubuntu@ip-10-192-10-167:~$ sudo apt install hydra
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+The following additional packages will be installed:
+  firebird3.0-common firebird3.0-common-doc libapr1 libaprutil1 libfbclient2 libmysqlclient20 libpq5 libserf-1-1 libssh-4
+  libsvn1 libtommath1 mysql-common
+Suggested packages:
+  hydra-gtk
+The following NEW packages will be installed:
+  firebird3.0-common firebird3.0-common-doc hydra libapr1 libaprutil1 libfbclient2 libmysqlclient20 libpq5 libserf-1-1
+  libssh-4 libsvn1 libtommath1 mysql-common
+0 upgraded, 13 newly installed, 0 to remove and 92 not upgraded.
+Need to get 3274 kB of archives.
+After this operation, 13.3 MB of additional disk space will be used.
+Do you want to continue? [Y/n] Y
+Get:1 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic/universe amd64 firebird3.0-common-doc all 3.0.2.32703.ds4-11ubuntu2 [31.5 kB]
+Get:2 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic/universe amd64 firebird3.0-common all 3.0.2.32703.ds4-11ubuntu2 [14.2 kB]
+Get:3 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic/main amd64 libapr1 amd64 1.6.3-2 [90.9 kB]
+Get:4 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libaprutil1 amd64 1.6.1-2ubuntu0.1 [84.6 kB]
+Get:5 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic/main amd64 libtommath1 amd64 1.0.1-1 [43.9 kB]
+Get:6 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic/universe amd64 libfbclient2 amd64 3.0.2.32703.ds4-11ubuntu2 [501 kB]
+Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic/main amd64 mysql-common all 5.8+1.0.4 [7308 B]
+Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libmysqlclient20 amd64 5.7.42-0ubuntu0.18.04.1 [730 kB]
+Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libpq5 amd64 10.23-0ubuntu0.18.04.2 [107 kB]
+Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic/universe amd64 libserf-1-1 amd64 1.3.9-6 [44.4 kB]
+Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic-updates/main amd64 libssh-4 amd64 0.8.0~20170825.94fa1e38-1ubuntu0.7 [170 kB]
+Get:12 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic-updates/universe amd64 libsvn1 amd64 1.9.7-4ubuntu1.1 [1181 kB]
+Get:13 http://us-east-1.ec2.archive.ubuntu.com/ubuntu bionic/universe amd64 hydra amd64 8.6-1build1 [267 kB]
+Fetched 3274 kB in 0s (13.7 MB/s)
+Selecting previously unselected package firebird3.0-common-doc.
+(Reading database ... 118986 files and directories currently installed.)
+Preparing to unpack .../00-firebird3.0-common-doc_3.0.2.32703.ds4-11ubuntu2_all.deb ...
+Unpacking firebird3.0-common-doc (3.0.2.32703.ds4-11ubuntu2) ...
+Selecting previously unselected package firebird3.0-common.
+Preparing to unpack .../01-firebird3.0-common_3.0.2.32703.ds4-11ubuntu2_all.deb ...
+Unpacking firebird3.0-common (3.0.2.32703.ds4-11ubuntu2) ...
+Selecting previously unselected package libapr1:amd64.
+Preparing to unpack .../02-libapr1_1.6.3-2_amd64.deb ...
+Unpacking libapr1:amd64 (1.6.3-2) ...
+Selecting previously unselected package libaprutil1:amd64.
+Preparing to unpack .../03-libaprutil1_1.6.1-2ubuntu0.1_amd64.deb ...
+Unpacking libaprutil1:amd64 (1.6.1-2ubuntu0.1) ...
+Selecting previously unselected package libtommath1:amd64.
+Preparing to unpack .../04-libtommath1_1.0.1-1_amd64.deb ...
+Unpacking libtommath1:amd64 (1.0.1-1) ...
+Selecting previously unselected package libfbclient2:amd64.
+Preparing to unpack .../05-libfbclient2_3.0.2.32703.ds4-11ubuntu2_amd64.deb ...
+Unpacking libfbclient2:amd64 (3.0.2.32703.ds4-11ubuntu2) ...
+Selecting previously unselected package mysql-common.
+Preparing to unpack .../06-mysql-common_5.8+1.0.4_all.deb ...
+Unpacking mysql-common (5.8+1.0.4) ...
+Selecting previously unselected package libmysqlclient20:amd64.
+Preparing to unpack .../07-libmysqlclient20_5.7.42-0ubuntu0.18.04.1_amd64.deb ...
+Unpacking libmysqlclient20:amd64 (5.7.42-0ubuntu0.18.04.1) ...
+Selecting previously unselected package libpq5:amd64.
+Preparing to unpack .../08-libpq5_10.23-0ubuntu0.18.04.2_amd64.deb ...
+Unpacking libpq5:amd64 (10.23-0ubuntu0.18.04.2) ...
+Selecting previously unselected package libserf-1-1:amd64.
+Preparing to unpack .../09-libserf-1-1_1.3.9-6_amd64.deb ...
+Unpacking libserf-1-1:amd64 (1.3.9-6) ...
+Selecting previously unselected package libssh-4:amd64.
+Preparing to unpack .../10-libssh-4_0.8.0~20170825.94fa1e38-1ubuntu0.7_amd64.deb ...
+Unpacking libssh-4:amd64 (0.8.0~20170825.94fa1e38-1ubuntu0.7) ...
+Selecting previously unselected package libsvn1:amd64.
+Preparing to unpack .../11-libsvn1_1.9.7-4ubuntu1.1_amd64.deb ...
+Unpacking libsvn1:amd64 (1.9.7-4ubuntu1.1) ...
+Selecting previously unselected package hydra.
+Preparing to unpack .../12-hydra_8.6-1build1_amd64.deb ...
+Unpacking hydra (8.6-1build1) ...
+Setting up libtommath1:amd64 (1.0.1-1) ...
+Setting up libapr1:amd64 (1.6.3-2) ...
+Setting up firebird3.0-common-doc (3.0.2.32703.ds4-11ubuntu2) ...
+Setting up mysql-common (5.8+1.0.4) ...
+update-alternatives: using /etc/mysql/my.cnf.fallback to provide /etc/mysql/my.cnf (my.cnf) in auto mode
+Setting up firebird3.0-common (3.0.2.32703.ds4-11ubuntu2) ...
+Setting up libfbclient2:amd64 (3.0.2.32703.ds4-11ubuntu2) ...
+Setting up libpq5:amd64 (10.23-0ubuntu0.18.04.2) ...
+Setting up libaprutil1:amd64 (1.6.1-2ubuntu0.1) ...
+Setting up libssh-4:amd64 (0.8.0~20170825.94fa1e38-1ubuntu0.7) ...
+Setting up libmysqlclient20:amd64 (5.7.42-0ubuntu0.18.04.1) ...
+Setting up libserf-1-1:amd64 (1.3.9-6) ...
+Setting up libsvn1:amd64 (1.9.7-4ubuntu1.1) ...
+Setting up hydra (8.6-1build1) ...
+Processing triggers for man-db (2.8.3-2ubuntu0.1) ...
+Processing triggers for libc-bin (2.27-3ubuntu1.5) ...
+ubuntu@ip-10-192-10-167:~$ hydra -l ubuntu -P rockyou.txt ssh://ec2-34-225-89-253.compute-1.amazonaws.com
